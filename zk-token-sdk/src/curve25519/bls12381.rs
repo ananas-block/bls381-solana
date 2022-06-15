@@ -20,13 +20,13 @@ pub struct PodBls12381GTPoint([u8; 576]);
 mod target_arch {
     use {
         super::*,
-        std::ops::Neg;
+        std::ops::Neg,
         crate::curve25519::{
             curve_syscall_traits::{GroupOperations, Pairing, PointValidation},
             errors::*,
             bls12381lib::*,
         },
-        blst::*;
+        blst::*,
     };
 
     pub fn validate_bls12381(point: &PodBls12381G1Point) -> bool {
@@ -261,11 +261,19 @@ mod target_arch {
         }
     }
 }
-
 #[cfg(test)]
 mod tests {
     use {super::*, 
-        rand::Rng};
+        rand::Rng,
+        crate::curve25519::{
+            curve_syscall_traits::{GroupOperations, Pairing, PointValidation},
+            errors::*,
+            bls12381lib::*,
+            bls12381::target_arch::*,
+        },
+        blst::*,
+
+    };
 
     #[test]
     fn test_validate_bls12381() {
